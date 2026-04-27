@@ -1,0 +1,247 @@
+// ============================================================
+// GAMS QR-Manager — DBML para dbdiagram.io
+// Pega este contenido completo en https://dbdiagram.io
+// ============================================================
+
+
+// ── ENUMERACIONES ────────────────────────────────────────────
+
+// estado_publicacion ya no es enum: ahora es la tabla estados_publicacion
+
+Enum accion_auditoria {
+  INSERT
+  UPDATE
+  DELETE
+}
+
+
+// ── TABLA: roles ─────────────────────────────────────────────
+
+Table roles {
+  id          integer     [primary key, increment]
+  nombre      varchar(50) [not null, unique]
+  descripcion text
+  is_active   boolean     [not null, default: true]
+  created_at  timestamp   [not null, default: `now()`]
+  update_at   timestamp   [not null, default: `now()`]
+  created_by  integer     [not null]
+  updated_by  integer     [not null]
+}
+
+
+// ── TABLA: usuarios ──────────────────────────────────────────
+
+Table usuarios {
+  id            integer      [primary key, increment]
+  nombre        varchar(150) [not null]
+  carnet        varchar(12)  [unique]
+  email         varchar(150) [not null, unique]
+  password_hash varchar(255) [not null]
+  is_active     boolean      [not null, default: true]
+  created_at    timestamp    [not null, default: `now()`]
+  update_at     timestamp    [not null, default: `now()`]
+  created_by    integer      [not null]
+  updated_by    integer      [not null]
+}
+
+
+// ── TABLA: usuario_roles ─────────────────────────────────────
+
+Table usuario_roles {
+  id         integer   [primary key, increment]
+  usuario_id int       [not null]
+  rol_id     int       [not null]
+  is_active  boolean   [not null, default: true]
+  created_at timestamp [not null, default: `now()`]
+  update_at  timestamp [not null, default: `now()`]
+  created_by integer   [not null]
+  updated_by integer   [not null]
+
+  Indexes {
+    (usuario_id, rol_id) [unique]
+  }
+}
+
+
+// ── TABLA: sistemas ──────────────────────────────────────────
+
+Table sistemas {
+  id            uuid         [primary key]
+  nombre        varchar(150) [not null]
+  descripcion   text
+  color_hex     varchar(7)
+  logo_url      varchar(200)
+  api_key       varchar(100) [not null, unique]
+  schema_campos jsonb
+  is_active     boolean      [not null, default: true]
+  created_at    timestamp    [not null, default: `now()`]
+  update_at     timestamp    [not null, default: `now()`]
+  created_by    integer      [not null]
+  updated_by    integer      [not null]
+}
+
+
+// ── TABLA: estados_registro ──────────────────────────────────
+// Catálogo dinámico. Los admins agregan nuevos estados desde
+// el frontend sin tocar el schema.
+// bloquea_qr: TRUE = el QR de ese registro es inválido al escanear.
+
+Table estados_registro {
+  id          integer     [primary key, increment]
+  nombre      varchar(50) [not null, unique]
+  descripcion text
+  color_hex   varchar(7)
+  bloquea_qr  boolean     [not null, default: false]
+  is_active   boolean     [not null, default: true]
+  created_at  timestamp   [not null, default: `now()`]
+  update_at   timestamp   [not null, default: `now()`]
+  created_by  integer     [not null]
+  updated_by  integer     [not null]
+}
+
+
+// ── TABLA: registros ─────────────────────────────────────────
+
+Table registros {
+  id                 uuid         [primary key]
+  sistema_id         uuid         [not null]
+  estado_id          int          [not null]
+  referencia_externa varchar(100) [not null]
+  datos_display      jsonb        [not null]
+  fecha_inicio       date         [not null]
+  fecha_vencimiento  date                      // NULL = sin vencimiento
+  suspendido_por     int
+  suspendido_en      timestamp
+  motivo_suspension  text
+  created_at         timestamp    [not null, default: `now()`]
+  update_at          timestamp    [not null, default: `now()`]
+  created_by         integer      [not null]
+  updated_by         integer      [not null]
+
+  Indexes {
+    (sistema_id, referencia_externa) [unique]
+  }
+}
+
+
+// ── TABLA: qr_codigos ────────────────────────────────────────
+// Relación 1 a 1 con registros.
+// codigo_unico: UUID público en la URL del QR (/scan/[codigo_unico]).
+// Separado de registro_id para regenerarlo sin afectar el vínculo interno.
+
+Table qr_codigos {
+  id             integer      [primary key, increment]
+  registro_id    uuid         [not null, unique]
+  codigo_unico   uuid         [not null, unique, default: `gen_random_uuid()`]
+  url_intermedia varchar(500) [not null]
+  imagen_qr_url  varchar(500)
+  created_at     timestamp    [not null, default: `now()`]
+}
+
+
+// ── TABLA: escaneos ──────────────────────────────────────────
+
+Table escaneos {
+  id           integer     [primary key, increment]
+  qr_codigo_id int         [not null]
+  ip_address   varchar(50) [not null]
+  dispositivo  varchar(150)
+  resultado    varchar(20) [not null, note: 'VALIDO | BLOQUEADO | VENCIDO | EXPIRADO']
+  created_at   timestamp   [not null, default: `now()`]
+}
+
+
+// ── TABLA: auditoria ─────────────────────────────────────────
+
+Table auditoria {
+  id            integer          [primary key, increment]
+  tabla_nombre  varchar(50)      [not null]
+  registro_id   text             [not null]  // TEXT soporta UUID e INT como string
+  accion        accion_auditoria
+  usuario_id    int
+  datos_antes   jsonb
+  datos_despues jsonb
+  ip_address    varchar(50)
+  created_at    timestamp        [not null, default: `now()`]
+}
+
+
+// ── TABLA: tipos_publicacion ─────────────────────────────────
+// Cada sistema define sus propios tipos de publicación.
+
+Table tipos_publicacion {
+  id          integer      [primary key, increment]
+  sistema_id  uuid         [not null]
+  nombre      varchar(100) [not null]
+  descripcion text
+  is_active   boolean      [not null, default: true]
+  created_at  timestamp    [not null, default: `now()`]
+  update_at   timestamp    [not null, default: `now()`]
+  created_by  integer      [not null]
+  updated_by  integer      [not null]
+
+  Indexes {
+    (sistema_id, nombre) [unique]
+  }
+}
+
+
+// ── TABLA: estados_publicacion ───────────────────────────────
+// Igual que estados_registro: admin agrega estados desde el frontend.
+
+Table estados_publicacion {
+  id          integer     [primary key, increment]
+  nombre      varchar(50) [not null, unique]
+  descripcion text
+  color_hex   varchar(7)
+  is_active   boolean     [not null, default: true]
+  created_at  timestamp   [not null, default: `now()`]
+  update_at   timestamp   [not null, default: `now()`]
+  created_by  integer     [not null]
+  updated_by  integer     [not null]
+}
+
+
+// ── TABLA: publicaciones ─────────────────────────────────────
+// contenido es JSONB libre: cada sistema define su estructura.
+
+Table publicaciones {
+  id                uuid                 [primary key, default: `gen_random_uuid()`]
+  tipo_id           int                  [not null]
+  titulo            varchar(255)         [not null]
+  contenido         jsonb                [not null]
+  adjuntos_urls     jsonb
+  fecha_publicacion date                 [not null, default: `current_date`]
+  fecha_vencimiento date
+  estado_id         int                  [not null]
+  created_at        timestamp            [not null, default: `now()`]
+  update_at         timestamp            [not null, default: `now()`]
+  created_by        integer              [not null]
+  updated_by        integer              [not null]
+}
+
+
+// ── RELACIONES (Foreign Keys) ────────────────────────────────
+
+// RBAC
+Ref: usuario_roles.usuario_id > usuarios.id
+Ref: usuario_roles.rol_id     > roles.id
+
+// Registros
+Ref: registros.sistema_id     > sistemas.id
+Ref: registros.estado_id      > estados_registro.id
+Ref: registros.suspendido_por > usuarios.id
+
+// QR
+Ref: qr_codigos.registro_id   - registros.id   // 1 a 1
+
+// Escaneos
+Ref: escaneos.qr_codigo_id    > qr_codigos.id
+
+// Auditoría
+Ref: auditoria.usuario_id     > usuarios.id
+
+// Publicaciones
+Ref: tipos_publicacion.sistema_id > sistemas.id
+Ref: publicaciones.tipo_id        > tipos_publicacion.id
+Ref: publicaciones.estado_id      > estados_publicacion.id
