@@ -1,0 +1,31 @@
+# ─── Dependencias ───────────────────────────────────────────
+node_modules/
+
+# ─── Compilación ────────────────────────────────────────────
+dist/
+build/
+
+# ─── Variables de entorno (NUNCA subir a Git) ────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Archivos QR generados ──────────────────────────────────
+public/qr/*.png
+
+# ─── Logs ────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+
+# ─── IDE / Editor ────────────────────────────────────────────
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ─── OS ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
