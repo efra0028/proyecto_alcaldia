@@ -1,0 +1,159 @@
+.wrap {
+  background: #fff;
+  border: 1.5px solid #e4e0db;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.scrollX {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+}
+
+/* ── Head ── */
+.thead {
+  background: #faf8f6;
+  border-bottom: 1.5px solid #e4e0db;
+}
+
+.th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7a7470;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.th:last-child { cursor: default; }
+
+.thRight { text-align: right; }
+
+.sortIconInactive { color: #c8c2bc; margin-left: 4px; }
+.sortIconActive   { color: #be2d26; margin-left: 4px; }
+
+/* ── Body rows ── */
+.tr {
+  border-bottom: 1px solid #f0edea;
+  transition: background 0.12s;
+}
+
+.tr:last-child { border-bottom: none; }
+.tr:hover      { background: #faf8f6; }
+.trAlt         { background: #fdfcfb; }
+.trAlt:hover   { background: #faf8f6; }
+
+.trArchivado { opacity: 0.6; }
+
+.td {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #1e1a18;
+  vertical-align: middle;
+}
+
+.tdMono {
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: #7a7470;
+}
+
+/* ── Publicación cell ── */
+.pubCell {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.carruselBadge {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.pubTitle {
+  font-weight: 600;
+  color: #1e1a18;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.pubResumen {
+  font-size: 12px;
+  color: #9e9890;
+  line-height: 1.4;
+}
+
+/* ── Vencimiento ── */
+.vencida     { color: #be2d26; font-weight: 500; }
+.vencidaTag  { font-size: 11px; font-weight: 600; }
+.sinVenc     { color: #c8c2bc; }
+
+/* ── Carrusel pos ── */
+.carruselPos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #fffbeb;
+  color: #d97706;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1.5px solid #fde68a;
+}
+
+.sinCarrusel { color: #c8c2bc; }
+
+/* ── Actions ── */
+.tdActions { text-align: right; }
+
+.actionBtn {
+  background: none;
+  border: 1.5px solid #e4e0db;
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 4px;
+  transition: border-color 0.12s, background 0.12s;
+  line-height: 1;
+}
+
+.actionBtn:hover      { background: #f0edea; border-color: #c8c2bc; }
+.actionArchive:hover  { background: #fff7ed; border-color: #fed7aa; }
+.actionPublish:hover  { background: #ecfdf5; border-color: #a7f3d0; }
+.actionDelete:hover   { background: #fef2f2; border-color: #fca5a5; }
+
+/* ── Empty ── */
+.empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: #9e9890;
+  font-size: 14px;
+}
+
+.emptyIcon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+/* ── Footer ── */
+.tableFooter {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #9e9890;
+  border-top: 1px solid #f0edea;
+  background: #faf8f6;
+  font-weight: 500;
+}

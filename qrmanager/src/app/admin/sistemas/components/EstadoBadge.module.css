@@ -1,0 +1,24 @@
+/* EstadoBadge.module.css */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.activo   { background: #ecfdf5; color: #059669; }
+.activo   .dot { background: #059669; }
+.inactivo { background: #fef2f2; color: #dc2626; }
+.inactivo .dot { background: #dc2626; }

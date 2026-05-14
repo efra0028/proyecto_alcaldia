@@ -1,0 +1,145 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 26, 24, 0.45);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+  padding: 16px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(30, 26, 24, 0.18);
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1.5px solid #f0edea;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #1e1a18;
+  letter-spacing: -0.01em;
+}
+
+.closeBtn {
+  background: #f0edea;
+  border: none;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  color: #7a7470;
+  transition: background 0.12s;
+}
+
+.closeBtn:hover { background: #e4e0db; }
+
+/* ── Body ── */
+.body {
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.iconWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.iconRed   { background: #fef2f2; }
+.iconAmber { background: #fffbeb; }
+.iconGreen { background: #ecfdf5; }
+
+.msg {
+  font-size: 14px;
+  color: #4a4541;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.textRed   { color: #be2d26; }
+.textAmber { color: #d97706; }
+.textGreen { color: #059669; }
+.textDark  { color: #1e1a18; }
+
+.warning {
+  background: #fffbeb;
+  border: 1.5px solid #fde68a;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  color: #92400e;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 22px;
+  border-top: 1.5px solid #f0edea;
+}
+
+.btnSecondary {
+  padding: 8px 16px;
+  border: 1.5px solid #e4e0db;
+  border-radius: 10px;
+  background: #fff;
+  color: #4a4541;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.btnSecondary:hover { background: #f0edea; }
+
+.btnPrimary {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.12s;
+}
+
+.btnPrimary:hover { opacity: 0.88; }
+
+.btnRed   { background: #be2d26; }
+.btnAmber { background: #d97706; }
+.btnGreen { background: #059669; }

@@ -1,0 +1,106 @@
+/* page.module.css */
+
+.page {
+  /* hereda padding del layout padre (.content) */
+  width: 100%;
+}
+
+/* ── Encabezado ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.breadcrumb {
+  font-size: 11.5px;
+  color: #9e9890;
+  font-weight: 500;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1e1a18;
+  letter-spacing: -0.02em;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: #7a7470;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+/* ── Botón primario ── */
+.btnNuevo {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #be2d26;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btnNuevo:hover { opacity: 0.88; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  box-shadow: 0 8px 30px rgba(30, 26, 24, 0.18);
+  z-index: 100;
+  animation: toastIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 360px;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast_success {
+  background: #fff;
+  color: #1e1a18;
+  border: 1.5px solid #a7f3d0;
+}
+
+.toast_error {
+  background: #fff;
+  color: #1e1a18;
+  border: 1.5px solid #fca5a5;
+}
+
+.toastIcon { font-size: 16px; flex-shrink: 0; }
+
+/* ── Responsivo ── */
+@media (max-width: 640px) {
+  .header { flex-direction: column; align-items: stretch; }
+  .btnNuevo { justify-content: center; }
+  .title { font-size: 22px; }
+}

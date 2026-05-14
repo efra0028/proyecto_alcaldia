@@ -1,0 +1,162 @@
+/* ── Navbar superior ─────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  right: 0;
+  height: 64px;
+  background: #fff;
+  border-bottom: 1px solid #E8E6E1;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+  z-index: 90;
+  transition: left 0.3s ease;
+}
+
+.navbarCollapsed {
+  left: 68px;
+}
+
+.navbarMobile {
+  left: 0;
+}
+
+/* Toggle sidebar */
+.toggleBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: none;
+  border: 1px solid #E8E6E1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #6B6B67;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.toggleBtn:hover {
+  background: #F5F4F2;
+  border-color: #D0CEC9;
+}
+
+/* Breadcrumb / título de página */
+.pageTitle {
+  flex: 1;
+}
+
+.pageTitleText {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1A1A1A;
+}
+
+.pageBreadcrumb {
+  font-size: 11px;
+  color: #9B9992;
+  margin-top: 1px;
+}
+
+/* Acciones del navbar */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionBtn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: #F5F4F2;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  color: #6B6B67;
+  transition: background 0.15s;
+}
+
+.actionBtn:hover {
+  background: #ECEAE5;
+}
+
+.notifBadge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #C8102E;
+  border: 1.5px solid #fff;
+}
+
+/* Separador */
+.divider {
+  width: 1px;
+  height: 24px;
+  background: #E8E6E1;
+}
+
+/* Perfil compacto */
+.profileChip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px 5px 5px;
+  border-radius: 10px;
+  border: 1px solid #E8E6E1;
+  cursor: pointer;
+  transition: background 0.15s;
+  background: transparent;
+}
+
+.profileChip:hover { background: #F5F4F2; }
+
+.profileAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C8102E, #FF4D6A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.profileName {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1A1A1A;
+  white-space: nowrap;
+}
+
+/* Status system */
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16A34A;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    left: 0 !important;
+  }
+  .profileName {
+    display: none;
+  }
+}

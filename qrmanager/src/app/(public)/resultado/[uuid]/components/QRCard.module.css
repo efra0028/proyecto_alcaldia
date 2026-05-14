@@ -1,0 +1,258 @@
+/* QRCard.module.css */
+.card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  animation: popIn .35s cubic-bezier(.17,.67,.35,1.2);
+}
+
+.cardHeader {
+  padding: 22px 22px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.headerIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.headerText {
+  flex: 1;
+  color: #fff;
+}
+
+.headerTitle {
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.headerSub {
+  font-size: 11.5px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+.headerTimestamp {
+  text-align: right;
+  color: rgba(255,255,255,.6);
+  font-size: 10px;
+}
+
+.systemBanner {
+  padding: 11px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.systemIconBox {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.systemName {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,.9);
+}
+
+.systemSub {
+  font-size: 10px;
+  color: rgba(255,255,255,.5);
+}
+
+.systemBadge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,.5);
+}
+
+.cardBody {
+  background: #fff;
+  padding: 22px 22px 20px;
+}
+
+.titularRow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.titularAvatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #f0f0f0;
+  border: 3px solid #86EFAC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 800;
+  color: #444;
+  flex-shrink: 0;
+}
+
+.titularName {
+  font-size: 18px;
+  font-weight: 800;
+  color: #222;
+  line-height: 1.2;
+}
+
+.titularRole {
+  font-size: 11.5px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.dataGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.dataCell {
+  background: #f8f8f8;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.dataCellLabel {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #a8a8a8;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 3px;
+}
+
+.dataCellValue {
+  font-size: 13px;
+  font-weight: 700;
+  color: #222;
+}
+
+.vigRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.vigTitle {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.vigSub {
+  font-size: 10.5px;
+  color: #a8a8a8;
+  margin-top: 2px;
+}
+
+.uuidBox {
+  background: #111;
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.uuidLabel {
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255,255,255,.35);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.uuidValue {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255,255,255,.6);
+  letter-spacing: .04em;
+}
+
+.blockedBody {
+  background: #fff;
+  padding: 36px 24px;
+  text-align: center;
+}
+
+.blockedIcon {
+  font-size: 56px;
+  margin-bottom: 14px;
+}
+
+.blockedTitle {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.blockedDesc {
+  font-size: 13.5px;
+  color: #888;
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.blockedExtra {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 14px;
+}
+
+.errorCode {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: monospace;
+  margin-bottom: 10px;
+}
+
+.auditNote {
+  font-size: 11px;
+  color: #a8a8a8;
+  margin-top: 6px;
+}
+
+/* Animaciones */
+@keyframes popIn {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

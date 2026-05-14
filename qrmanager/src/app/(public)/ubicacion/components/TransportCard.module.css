@@ -1,0 +1,59 @@
+/* src/app/ubicacion/components/TransportCard.module.css */
+
+.card {
+  background: #fff;
+  border: 1px solid #e2e0db;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  border-color: #c8102e;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.desc {
+  font-size: 13px;
+  color: #6b6b67;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .icon {
+    font-size: 36px;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .name {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .desc {
+    font-size: 12px;
+  }
+}

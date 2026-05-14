@@ -1,0 +1,166 @@
+/* ── Backdrop ── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 26, 24, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 20px;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal ── */
+.modal {
+  background: #fff;
+  border-radius: 20px;
+  border: 1.5px solid #e4e0db;
+  box-shadow:
+    0 20px 60px rgba(30, 26, 24, 0.18),
+    0 4px 12px rgba(30, 26, 24, 0.08);
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Icono ── */
+.iconWrap {
+  display: flex;
+  justify-content: center;
+  padding: 28px 24px 0;
+}
+
+.iconCircle {
+  width: 60px;
+  height: 60px;
+  background: #fef2f2;
+  border: 2px solid #fca5a5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+/* ── Content ── */
+.content {
+  padding: 18px 28px 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1e1a18;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  font-size: 13.5px;
+  color: #7a7470;
+  line-height: 1.55;
+  margin: 0 0 18px;
+}
+
+/* ── Tarjeta del QR ── */
+.qrCard {
+  background: #faf8f6;
+  border: 1.5px solid #e4e0db;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.qrCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.qrCardLabel {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #9e9890;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.qrCardVal {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e1a18;
+  text-align: right;
+}
+
+.qrCardCode {
+  font-family: monospace;
+  font-size: 11.5px;
+  color: #7a7470;
+  background: #f0edea;
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+/* ── Footer ── */
+.footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px 24px;
+  border-top: 1px solid #f0edea;
+}
+
+.btnCancelar {
+  flex: 1;
+  padding: 11px 0;
+  border: 1.5px solid #e4e0db;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a4541;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.btnCancelar:hover {
+  background: #f5f3f1;
+  border-color: #c8c2bc;
+}
+
+.btnEliminar {
+  flex: 1.4;
+  padding: 11px 0;
+  border: none;
+  border-radius: 10px;
+  background: #be2d26;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.12s, transform 0.1s;
+}
+
+.btnEliminar:hover  { background: #a52420; }
+.btnEliminar:active { transform: scale(0.98); }

@@ -1,0 +1,72 @@
+/* src/app/ubicacion/components/HoursTable.module.css */
+
+.table {
+  background: #fff;
+  border: 1px solid #e2e0db;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 56px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0eeea;
+}
+
+.headerIcon {
+  font-size: 24px;
+}
+
+.header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0eeea;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.day {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.time {
+  font-size: 14px;
+  color: #4a4a4a;
+}
+
+.closed {
+  font-size: 14px;
+  color: #c8102e;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .table {
+    padding: 16px;
+  }
+
+  .header h3 {
+    font-size: 16px;
+  }
+
+  .day, .time, .closed {
+    font-size: 13px;
+  }
+}

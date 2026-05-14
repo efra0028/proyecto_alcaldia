@@ -1,0 +1,388 @@
+/* ── Scan Page ── */
+.page {
+  min-height: calc(100vh - 60px);
+  background: var(--canvas);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px 64px;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 36px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--g800);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--g400);
+  font-weight: 400;
+  max-width: 340px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── Scanner card ── */
+.card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--white);
+  border-radius: 20px;
+  border: 1px solid var(--g100);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+/* ── Idle state ── */
+.idleBody {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.iconRing {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--red-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.idleTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--g800);
+  letter-spacing: -0.02em;
+}
+
+.idleText {
+  font-size: 13px;
+  color: var(--g400);
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+.btnPrimary {
+  width: 100%;
+  max-width: 280px;
+  padding: 14px 24px;
+  background: var(--red);
+  color: var(--white);
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btnPrimary:hover {
+  background: var(--red-dark);
+}
+
+.btnPrimary:active {
+  transform: scale(0.98);
+}
+
+.btnSecondary {
+  padding: 10px 20px;
+  background: var(--g50);
+  color: var(--g600);
+  font-family: 'Sora', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--g100);
+}
+
+/* ── Camera viewfinder ── */
+.viewfinder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hidden canvas for frame capture */
+.canvas {
+  display: none;
+}
+
+/* Corner brackets overlay */
+.corners {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--white);
+  border-style: solid;
+  opacity: 0.9;
+}
+
+.corner.tl { top: 20px; left: 20px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+.corner.tr { top: 20px; right: 20px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.corner.bl { bottom: 20px; left: 20px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+.corner.br { bottom: 20px; right: 20px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+
+/* Scanning laser line */
+.laser {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  animation: laserScan 2s ease-in-out infinite;
+  border-radius: 2px;
+}
+
+@keyframes laserScan {
+  0%   { top: 20px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(100% - 20px); opacity: 0; }
+}
+
+.viewfinderBar {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  border-top: 1px solid var(--g100);
+}
+
+.scanningLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--g500);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* ── Loading state ── */
+.loadingBody {
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--g100);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--g600);
+}
+
+/* ── Success state ── */
+.resultBody {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: cardIn 0.35s ease both;
+}
+
+.resultHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.resultIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resultIcon.success { background: #EDFAF3; }
+.resultIcon.error   { background: var(--red-light); }
+.resultIcon.notFound { background: #FFF8E6; }
+
+.resultTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--g800);
+  letter-spacing: -0.01em;
+}
+
+.resultSub {
+  font-size: 12px;
+  color: var(--g400);
+  margin-top: 2px;
+}
+
+/* Info rows */
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--g100);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--g100);
+  gap: 12px;
+}
+
+.infoRow:last-child { border-bottom: none; }
+
+.infoLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--g400);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  flex-shrink: 0;
+}
+
+.infoVal {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--g700);
+  text-align: right;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.badge.active   { background: #EDFAF3; color: #1A8A4A; }
+.badge.inactive { background: var(--red-light); color: var(--red); }
+.badge.pending  { background: #FFF8E6; color: #B07A00; }
+
+.actionsRow {
+  display: flex;
+  gap: 10px;
+}
+
+.actionsRow .btnPrimary  { flex: 1; max-width: unset; font-size: 13px; padding: 11px; }
+.actionsRow .btnSecondary { flex: 1; font-size: 13px; padding: 11px; }
+
+/* ── Not found / Error ── */
+.notFoundBody {
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  animation: cardIn 0.35s ease both;
+}
+
+.notFoundIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notFoundMsg {
+  font-size: 13px;
+  color: var(--g500);
+  line-height: 1.6;
+  max-width: 260px;
+}
+
+/* ── Tip footer ── */
+.tip {
+  margin-top: 24px;
+  font-size: 11.5px;
+  color: var(--g400);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: fadeUp 0.5s 0.2s ease both;
+}

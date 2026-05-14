@@ -1,0 +1,185 @@
+/* ── Layout ── */
+.resultado-main {
+  min-height: 100vh;
+  background: #f5f2ee;
+  padding: 2rem 1rem 4rem;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Badge de estado ── */
+.estado-badge {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  border-left: 5px solid transparent;
+}
+
+.estado-vigente   { background: #f0faf5; border-color: #27ae60; color: #1a6b3c; }
+.estado-vencido   { background: #fff4f4; border-color: #c0392b; color: #922b21; }
+.estado-suspendido{ background: #fff8ec; border-color: #e67e22; color: #9c5a0a; }
+.estado-pendiente { background: #f0f4ff; border-color: #5b7be9; color: #2d4db5; }
+.estado-error     { background: #f9f9f9; border-color: #999;    color: #555;    }
+
+.estado-icon {
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.estado-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+}
+
+.estado-mensaje {
+  font-size: 0.875rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ── Tarjeta de datos ── */
+.resultado-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.resultado-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f0ede8;
+}
+
+.resultado-servicio {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.resultado-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c0392b;
+}
+
+/* ── Filas de datos ── */
+.resultado-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.dato-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.dato-fila dt {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dato-fila dd {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  text-align: right;
+  margin: 0;
+}
+
+.dato-fila--full {
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.dato-fila--full dd { text-align: left; }
+
+.texto-alerta { color: #c0392b; font-weight: 700; }
+
+/* ── UUID ── */
+.resultado-uuid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0ede8;
+}
+
+.resultado-uuid span {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.resultado-uuid code {
+  font-size: 0.75rem;
+  color: #555;
+  word-break: break-all;
+  font-family: "SF Mono", "Fira Code", monospace;
+  background: #f5f2ee;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+}
+
+/* ── Pie ── */
+.resultado-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+.resultado-footer p {
+  font-size: 0.8rem;
+  color: #999;
+  margin: 0;
+}
+
+.resultado-link {
+  font-size: 0.9rem;
+  color: #c0392b;
+  font-weight: 600;
+  text-decoration: none;
+}
+.resultado-link:hover { text-decoration: underline; }
+
+/* ── Skeletons ── */
+.skeleton {
+  background: linear-gradient(90deg, #ece9e4 25%, #f5f2ee 50%, #ece9e4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+}
+.skeleton-badge  { height: 80px; }
+.skeleton-titulo { height: 24px; width: 60%; }
+.skeleton-fila   { height: 16px; margin-top: 0.75rem; }
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

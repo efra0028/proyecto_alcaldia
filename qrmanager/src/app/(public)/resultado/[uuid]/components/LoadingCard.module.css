@@ -1,0 +1,110 @@
+/* src/app/resultado/[uuid]/components/LoadingCard.module.css */
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  animation: popIn 0.35s cubic-bezier(0.17, 0.67, 0.35, 1.2);
+}
+
+/* Skeleton base */
+.skeleton {
+  background: linear-gradient(90deg, #e2e2e2 25%, #f0f0f0 50%, #e2e2e2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+
+/* Header skeleton */
+.headerSkeleton {
+  height: 88px;
+  border-radius: 0;
+}
+
+/* Content container */
+.content {
+  padding: 24px 24px 0;
+}
+
+/* Avatar section */
+.avatarSection {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatarSkeleton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.textSkeletonGroup {
+  flex: 1;
+}
+
+.titleSkeleton {
+  height: 18px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  width: 70%;
+}
+
+.subtitleSkeleton {
+  height: 12px;
+  border-radius: 6px;
+  width: 60%;
+}
+
+/* Grid skeleton */
+.gridSkeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cellSkeleton {
+  height: 60px;
+  border-radius: 10px;
+}
+
+/* Vigencia bar skeleton */
+.vigenciaSkeleton {
+  height: 52px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+/* UUID box skeleton */
+.uuidSkeleton {
+  height: 40px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* Animations */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

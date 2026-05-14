@@ -1,0 +1,148 @@
+.wrap {
+  background: #fff;
+  border: 1.5px solid #e4e0db;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.scrollX { overflow-x: auto; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+/* ── Head ── */
+.thead {
+  background: #faf8f6;
+  border-bottom: 1.5px solid #e4e0db;
+}
+
+.th {
+  padding: 11px 14px;
+  text-align: left;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #7a7470;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.th:last-child { cursor: default; }
+.thRight { text-align: right; }
+.sortInactive { color: #c8c2bc; margin-left: 4px; }
+.sortActive   { color: #185FA5; margin-left: 4px; }
+
+/* ── Rows ── */
+.tr {
+  border-bottom: 1px solid #f0edea;
+  transition: background 0.12s;
+}
+.tr:last-child  { border-bottom: none; }
+.tr:hover       { background: #faf8f6; }
+.trAlt          { background: #fdfcfb; }
+.trAlt:hover    { background: #faf8f6; }
+.trVencido      { opacity: 0.65; }
+
+.td {
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #1e1a18;
+  vertical-align: middle;
+}
+
+.tdMono {
+  font-variant-numeric: tabular-nums;
+  font-size: 12.5px;
+  color: #7a7470;
+}
+
+/* ── Referencia cell ── */
+.refCell { display: flex; flex-direction: column; gap: 2px; }
+
+.refCode {
+  font-weight: 700;
+  font-size: 13px;
+  color: #1e1a18;
+  font-variant-numeric: tabular-nums;
+}
+
+.refUuid {
+  font-size: 11px;
+  color: #b0aaa4;
+  font-family: monospace;
+}
+
+/* ── Datos display preview ── */
+.datosWrap { display: flex; flex-direction: column; gap: 2px; }
+
+.datoItem { display: flex; gap: 4px; font-size: 11.5px; line-height: 1.4; }
+
+.datoKey {
+  color: #9e9890;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.datoVal { color: #4a4541; }
+
+.datosMore {
+  font-size: 11px;
+  color: #b0aaa4;
+  margin-top: 2px;
+  font-style: italic;
+}
+
+/* ── Vencimiento ── */
+.vencidoText { color: #be2d26; font-weight: 500; }
+.vencidaTag  { font-size: 10.5px; font-weight: 700; color: #be2d26; }
+.sinVenc     { color: #b0aaa4; font-size: 12px; }
+
+/* ── Actions ── */
+.tdActions { text-align: right; }
+
+.actionBtn {
+  background: none;
+  border: 1.5px solid #e4e0db;
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 4px;
+  transition: border-color 0.12s, background 0.12s;
+  line-height: 1;
+}
+
+.actionBtn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.actionBtn:not(:disabled):hover { background: #f0edea; border-color: #c8c2bc; }
+.actionQr:not(:disabled):hover    { background: #eff6ff; border-color: #93c5fd; }
+.actionSuspend:not(:disabled):hover { background: #fffbeb; border-color: #fde68a; }
+.actionActivate:not(:disabled):hover { background: #ecfdf5; border-color: #a7f3d0; }
+.actionDelete:not(:disabled):hover  { background: #fef2f2; border-color: #fca5a5; }
+
+/* ── Empty ── */
+.empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: #9e9890;
+  font-size: 14px;
+}
+
+.emptyIcon { font-size: 36px; margin-bottom: 10px; }
+
+/* ── Footer ── */
+.tableFooter {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: #9e9890;
+  border-top: 1px solid #f0edea;
+  background: #faf8f6;
+  font-weight: 500;
+}

@@ -1,0 +1,165 @@
+/* ── Dashboard page ───────────────────────────────────────────────────────── */
+
+/* Bienvenida */
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.welcomeText h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1A1A1A;
+  margin-bottom: 4px;
+}
+
+.welcomeText p {
+  font-size: 13px;
+  color: #6B6B67;
+}
+
+.welcomeActions {
+  display: flex;
+  gap: 10px;
+}
+
+.btnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  background: #C8102E;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.btnPrimary:hover { background: #A50D26; }
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  background: #fff;
+  color: #1A1A1A;
+  border: 1px solid #E8E6E1;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.btnSecondary:hover { background: #F5F4F2; }
+
+/* Grilla de stats */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Grilla principal */
+.mainGrid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+/* Sección completa */
+.fullWidth {
+  margin-bottom: 24px;
+}
+
+/* Accesos rápidos */
+.quickAccess {
+  background: #fff;
+  border: 1px solid #E8E6E1;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.quickAccessTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A1A1A;
+  margin-bottom: 16px;
+}
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.quickItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px;
+  border-radius: 10px;
+  border: 1px solid #E8E6E1;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.quickItem:hover {
+  border-color: #C8102E;
+  background: #FFF5F6;
+}
+
+.quickIcon {
+  font-size: 22px;
+}
+
+.quickLabel {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6B6B67;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Alerta banner */
+.alertBanner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFF8E6;
+  border: 1px solid #F5C842;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #713F12;
+}
+
+.alertBanner strong { font-weight: 600; }
+
+@media (max-width: 1100px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .mainGrid  { grid-template-columns: 1fr; }
+  .quickGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .statsGrid { grid-template-columns: 1fr 1fr; }
+  .quickGrid { grid-template-columns: repeat(3, 1fr); }
+  .welcomeActions { display: none; }
+}

@@ -1,0 +1,67 @@
+/* src/app/mas-informacion/components/AvisosUrgentes.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.avisoCard {
+  background: #f5f4f2;
+  border: 1px solid #e2e0db;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.15s ease;
+}
+
+.avisoCard:hover {
+  border-color: #c8102e;
+  background: #fff;
+}
+
+.avisoIcon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.avisoContent {
+  flex: 1;
+}
+
+.avisoLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.avisoTexto {
+  font-size: 14px;
+  color: #2c2c2a;
+  line-height: 1.4;
+}
+
+.avisoFecha {
+  font-size: 11px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .avisoCard {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .avisoIcon {
+    font-size: 20px;
+  }
+
+  .avisoTexto {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,178 @@
+/* src/app/mas-informacion/components/HeroCarrusel.module.css */
+
+.carrusel {
+  position: relative;
+  height: 320px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #1a1a1a;
+  cursor: pointer;
+  margin-bottom: 32px;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+}
+.slideBgImagen {
+  position: absolute;
+  inset: 0;
+}
+
+.slideActive {
+  opacity: 1;
+}
+
+.slideBg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.15;
+}
+
+.slideEmoji {
+  font-size: 120px;
+}
+
+.slideOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+}
+
+.slideContent {
+  position: relative;
+  z-index: 1;
+}
+
+.slideTag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  margin-bottom: 12px;
+}
+
+.slideTitle {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.slideSubtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Navigation Buttons */
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.navPrev {
+  left: 16px;
+}
+
+.navNext {
+  right: 16px;
+}
+
+/* Indicators */
+.indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.indicator {
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 4px;
+  width: 8px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.indicatorActive {
+  width: 24px;
+  background: #fff;
+}
+
+/* Counter */
+.counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carrusel {
+    height: 280px;
+  }
+
+  .slide {
+    padding: 20px;
+  }
+
+  .slideTitle {
+    font-size: 18px;
+  }
+
+  .slideSubtitle {
+    font-size: 12px;
+  }
+
+  .navBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,139 @@
+/* ── Contenedor ── */
+.qrcard {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
+  padding: 2rem 1.75rem 1.5rem;
+  max-width: 340px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* ── Encabezado ── */
+.qrcard-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.qrcard-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c0392b;
+}
+
+.qrcard-servicio {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.qrcard-titular {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+/* ── QR ── */
+.qrcard-qr {
+  padding: 0.75rem;
+  border: 2px solid #f0ede8;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+/* ── Meta ── */
+.qrcard-meta {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #f5f2ee;
+  border-radius: 10px;
+}
+
+.qrcard-meta-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.85rem;
+}
+
+.qrcard-meta-fila span {
+  color: #999;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.qrcard-meta-fila strong {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+.qrcard-meta-fila code {
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 0.78rem;
+  color: #555;
+}
+
+/* ── Acciones ── */
+.qrcard-actions {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.qrcard-btn {
+  flex: 1;
+  padding: 0.65rem 0;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.qrcard-btn:active {
+  transform: scale(0.97);
+}
+
+.qrcard-btn--primary {
+  background: #c0392b;
+  color: #fff;
+}
+
+.qrcard-btn--primary:hover {
+  opacity: 0.88;
+}
+
+.qrcard-btn--secondary {
+  background: #f0ede8;
+  color: #1a1a1a;
+}
+
+.qrcard-btn--secondary:hover {
+  background: #e8e4de;
+}
+
+/* ── URL ── */
+.qrcard-url {
+  font-size: 0.7rem;
+  color: #bbb;
+  text-align: center;
+  word-break: break-all;
+  margin: 0;
+}
