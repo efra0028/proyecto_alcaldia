@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Put, Patch, Body, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Body,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { EstadosRegistroService } from './estados-registro.service';
 import { CreateEstadoRegistroDto } from './dto/create-estado-registro.dto';
@@ -16,7 +26,9 @@ export class EstadosRegistroController {
   constructor(private readonly service: EstadosRegistroService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Listar estados de registro (ACTIVO, SUSPENDIDO, etc.)' })
+  @ApiOperation({
+    summary: 'Listar estados de registro (ACTIVO, SUSPENDIDO, etc.)',
+  })
   findAll() {
     return this.service.findAll();
   }
@@ -30,7 +42,10 @@ export class EstadosRegistroController {
   @Post()
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Crear nuevo estado de registro' })
-  create(@Body() dto: CreateEstadoRegistroDto, @CurrentUser() user: JwtPayload) {
+  create(
+    @Body() dto: CreateEstadoRegistroDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.create(dto, user.id);
   }
 
@@ -48,7 +63,10 @@ export class EstadosRegistroController {
   @Patch(':id/toggle')
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Activar o desactivar estado' })
-  toggle(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: JwtPayload) {
+  toggle(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.toggleActivo(id, user.id);
   }
 }

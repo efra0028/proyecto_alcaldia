@@ -18,9 +18,9 @@ const RUTAS_EXCLUIDAS = [
 
 // Mapeo de método HTTP → acción de auditoría
 const METODO_A_ACCION: Record<string, AccionAuditoria> = {
-  POST:   AccionAuditoria.INSERT,
-  PUT:    AccionAuditoria.UPDATE,
-  PATCH:  AccionAuditoria.UPDATE,
+  POST: AccionAuditoria.INSERT,
+  PUT: AccionAuditoria.UPDATE,
+  PATCH: AccionAuditoria.UPDATE,
   DELETE: AccionAuditoria.DELETE,
 };
 
@@ -76,9 +76,12 @@ export class AuditInterceptor implements NestInterceptor {
     if (respuesta?.id) return String(respuesta.id);
 
     // Si no, usar el segmento de la URL que parece un ID (último segmento numérico o UUID)
-    const idSegmento = segmentos.find((s) =>
-      /^\d+$/.test(s) || // número
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s), // UUID
+    const idSegmento = segmentos.find(
+      (s) =>
+        /^\d+$/.test(s) || // número
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          s,
+        ), // UUID
     );
 
     return idSegmento ?? 'N/A';

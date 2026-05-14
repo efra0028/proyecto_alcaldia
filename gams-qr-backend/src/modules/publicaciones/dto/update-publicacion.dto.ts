@@ -4,14 +4,13 @@ import {
   IsInt,
   IsObject,
   IsDateString,
+  IsBoolean,
   MaxLength,
+  Min,
+  Max,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-/**
- * DTO para actualizar una publicación.
- * Todos los campos son opcionales — solo se actualizan los enviados.
- */
 export class UpdatePublicacionDto {
   @ApiPropertyOptional({ example: 1 })
   @IsOptional()
@@ -26,7 +25,6 @@ export class UpdatePublicacionDto {
 
   @ApiPropertyOptional({
     example: { texto: 'Texto actualizado', autor: 'Alcaldía' },
-    description: 'Contenido en JSON — reemplaza el contenido anterior completo',
   })
   @IsOptional()
   @IsObject()
@@ -51,4 +49,17 @@ export class UpdatePublicacionDto {
   @IsOptional()
   @IsInt()
   estado_id?: number;
+
+  // ── Carrusel ────────────────────────────────────────────────────────────
+  @ApiPropertyOptional({ example: false })
+  @IsOptional()
+  @IsBoolean()
+  destacada?: boolean;
+
+  @ApiPropertyOptional({ example: 0 })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(10)
+  orden_carrusel?: number;
 }

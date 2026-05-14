@@ -1,5 +1,15 @@
-import { Controller, Get, Post, Put, Patch, Body, Param, Query, ParseIntPipe, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Body,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { TiposPublicacionService } from './tipos-publicacion.service';
 import { CreateTipoPublicacionDto } from './dto/create-tipo-publicacion.dto';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
@@ -16,10 +26,9 @@ export class TiposPublicacionController {
   constructor(private readonly service: TiposPublicacionService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Listar tipos de publicación (filtrable por sistema_id)' })
-  @ApiQuery({ name: 'sistema_id', required: false })
-  findAll(@Query('sistema_id') sistema_id?: string) {
-    return this.service.findAll(sistema_id);
+  @ApiOperation({ summary: 'Listar tipos de publicación' })
+  findAll() {
+    return this.service.findAll();
   }
 
   @Get(':id')
@@ -31,7 +40,10 @@ export class TiposPublicacionController {
   @Post()
   @Roles('SUPER_ADMIN', 'ADMIN')
   @ApiOperation({ summary: 'Crear nuevo tipo de publicación para un sistema' })
-  create(@Body() dto: CreateTipoPublicacionDto, @CurrentUser() user: JwtPayload) {
+  create(
+    @Body() dto: CreateTipoPublicacionDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.create(dto, user.id);
   }
 
@@ -49,7 +61,10 @@ export class TiposPublicacionController {
   @Patch(':id/toggle')
   @Roles('SUPER_ADMIN', 'ADMIN')
   @ApiOperation({ summary: 'Activar o desactivar tipo de publicación' })
-  toggle(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: JwtPayload) {
+  toggle(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.toggleActivo(id, user.id);
   }
 }

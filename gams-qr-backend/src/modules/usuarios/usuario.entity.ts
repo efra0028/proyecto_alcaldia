@@ -10,41 +10,40 @@ import { Rol } from '../roles/rol.entity';
 @Entity('usuarios')
 export class Usuario {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ length: 150 })
-  nombre: string;
+  nombre!: string;
 
   @Column({ length: 12, nullable: true, unique: true })
-  carnet: string;
+  carnet!: string; // nullable: true, puede ser undefined
 
   @Column({ length: 150, unique: true })
-  email: string;
+  email!: string;
 
-  @Column({ length: 255, select: false }) // select:false → no se incluye en queries por defecto
-  password_hash: string;
+  @Column({ length: 255, select: false })
+  password_hash!: string;
 
   @Column({ default: true })
-  is_active: boolean;
+  is_active!: boolean;
 
   @Column({ type: 'timestamp', default: () => 'NOW()' })
-  created_at: Date;
+  created_at!: Date;
 
   @Column({ type: 'timestamp', default: () => 'NOW()' })
-  update_at: Date;
+  update_at!: Date;
 
   @Column()
-  created_by: number;
+  created_by!: number;
 
   @Column()
-  updated_by: number;
+  updated_by!: number;
 
-  // Relación many-to-many con roles via tabla usuario_roles
   @ManyToMany(() => Rol)
   @JoinTable({
     name: 'usuario_roles',
     joinColumn: { name: 'usuario_id', referencedColumnName: 'id' },
     inverseJoinColumn: { name: 'rol_id', referencedColumnName: 'id' },
   })
-  roles: Rol[];
+  roles!: Rol[];
 }

@@ -10,7 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import * as QRCode from 'qrcode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { QrCodigo } from './qr-codigo.entity';
 import { Escaneo } from '../escaneos/escaneo.entity';
 import { Registro } from '../registros/registro.entity';
@@ -28,18 +28,21 @@ export class QrCodigosService {
     private registroRepo: Repository<Registro>,
     private configService: ConfigService,
   ) {
-    this.baseUrl = this.configService.get<string>('BASE_URL') ?? 'http://localhost:3000';
+    this.baseUrl =
+      this.configService.get<string>('BASE_URL') ?? 'http://localhost:3000';
   }
 
   // ── GENERACIÓN ──────────────────────────────────────────────
 
-  async generar(registroId: string, currentUserId: number) {
+  async generar(registroId: string) {
     // 1. Verificar que el registro exista
     const registro = await this.registroRepo.findOne({
       where: { id: registroId },
       relations: ['estado'],
     });
-    if (!registro) throw new NotFoundException(`Registro ${registroId} no encontrado`);
+    if (!registro) {
+      throw new NotFoundException(`Registro ${registroId} no encontrado`);
+    }
 
     // 2. Verificar que el registro esté activo
     if (registro.estado?.bloquea_qr) {
@@ -49,7 +52,9 @@ export class QrCodigosService {
     }
 
     // 3. Verificar que no tenga ya un QR (relación 1-a-1)
-    const qrExistente = await this.qrRepo.findOne({ where: { registro_id: registroId } });
+    const qrExistente = await this.qrRepo.findOne({
+      where: { registro_id: registroId },
+    });
     if (qrExistente) {
       throw new ConflictException(
         `Este registro ya tiene un QR. Usa el endpoint /regenerar para renovarlo`,
@@ -59,18 +64,29 @@ export class QrCodigosService {
     return this.crearQr(registroId);
   }
 
-  async regenerar(id: number, currentUserId: number) {
-    const qr = await this.qrRepo.findOne({ where: { id } });
-    if (!qr) throw new NotFoundException(`QR #${id} no encontrado`);
+  async regenerar(id: number) {
+    const qr = await this.qrRepo.findOne({
+      where: { id },
+    });
+    if (!qr) {
+      throw new NotFoundException(`QR #${id} no encontrado`);
+    }
 
     // Eliminar imagen anterior si existe
     if (qr.imagen_qr_url) {
-      const oldPath = path.join(process.cwd(), 'public', 'qr', `${path.basename(qr.imagen_qr_url)}`);
-      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      const oldPath = path.join(
+        process.cwd(),
+        'public',
+        'qr',
+        `${path.basename(qr.imagen_qr_url)}`,
+      );
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
     }
 
     // Nuevo codigo_unico
-    const nuevo_codigo = uuidv4();
+    const nuevo_codigo = randomUUID();
     const nuevaUrl = `${this.baseUrl}/api/v1/qr-codigos/scan/${nuevo_codigo}`;
     const imagenPath = await this.guardarImagenQr(nuevo_codigo, nuevaUrl);
 
@@ -82,19 +98,87 @@ export class QrCodigosService {
   }
 
   async findOne(id: number) {
-    const qr = await this.qrRepo.findOne({ where: { id }, relations: ['registro'] });
-    if (!qr) throw new NotFoundException(`QR #${id} no encontrado`);
+    const qr = await this.qrRepo.findOne({
+      where: { id },
+      relations: ['registro'],
+    });
+    if (!qr) {
+      throw new NotFoundException(`QR #${id} no encontrado`);
+    }
 
-    const totalEscaneos = await this.escaneoRepo.count({ where: { qr_codigo_id: id } });
+    const totalEscaneos = await this.escaneoRepo.count({
+      where: { qr_codigo_id: id },
+    });
     return { ...qr, total_escaneos: totalEscaneos };
   }
 
   async findByRegistroId(registroId: string) {
-    const qr = await this.qrRepo.findOne({ where: { registro_id: registroId } });
-    if (!qr) throw new NotFoundException(`No hay QR generado para este registro`);
+    const qr = await this.qrRepo.findOne({
+      where: { registro_id: registroId },
+    });
+    if (!qr) {
+      throw new NotFoundException(`No hay QR generado para este registro`);
+    }
 
-    const totalEscaneos = await this.escaneoRepo.count({ where: { qr_codigo_id: qr.id } });
+    const totalEscaneos = await this.escaneoRepo.count({
+      where: { qr_codigo_id: qr.id },
+    });
     return { ...qr, total_escaneos: totalEscaneos };
+  }
+
+  async findAll(
+    registroId?: string,
+    sistemaId?: string,
+    pagina = 1,
+    limite = 10,
+  ) {
+    const query = this.qrRepo
+      .createQueryBuilder('qr')
+      .leftJoinAndSelect('qr.registro', 'registro')
+      .leftJoinAndSelect('registro.sistema', 'sistema')
+      .leftJoinAndSelect('registro.estado', 'estado');
+
+    if (registroId) {
+      query.andWhere('qr.registro_id = :registroId', { registroId });
+    }
+    if (sistemaId) {
+      query.andWhere('registro.sistema_id = :sistemaId', { sistemaId });
+    }
+
+    const [data, total] = await query
+      .orderBy('qr.created_at', 'DESC')
+      .skip((pagina - 1) * limite)
+      .take(limite)
+      .getManyAndCount();
+
+    return {
+      data,
+      total,
+      pagina,
+      limite,
+      totalPaginas: Math.ceil(total / limite),
+    };
+  }
+
+  async delete(id: number) {
+    const qr = await this.qrRepo.findOne({ where: { id } });
+    if (!qr) {
+      throw new NotFoundException(`QR #${id} no encontrado`);
+    }
+
+    if (qr.imagen_qr_url) {
+      const imagePath = path.join(
+        process.cwd(),
+        'public',
+        'qr',
+        `${path.basename(qr.imagen_qr_url)}`,
+      );
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
+
+    return this.qrRepo.remove(qr);
   }
 
   // ── ESCANEO PÚBLICO ─────────────────────────────────────────
@@ -168,10 +252,12 @@ export class QrCodigosService {
   // ── HELPERS PRIVADOS ─────────────────────────────────────────
 
   private async crearQr(registroId: string) {
-    const codigo_unico = uuidv4();
+    const codigo_unico = randomUUID();
     const url_intermedia = `${this.baseUrl}/api/v1/qr-codigos/scan/${codigo_unico}`;
-    const imagen_qr_url = await this.guardarImagenQr(codigo_unico, url_intermedia);
-
+    const imagen_qr_url = await this.guardarImagenQr(
+      codigo_unico,
+      url_intermedia,
+    );
     const qr = this.qrRepo.create({
       registro_id: registroId,
       codigo_unico,

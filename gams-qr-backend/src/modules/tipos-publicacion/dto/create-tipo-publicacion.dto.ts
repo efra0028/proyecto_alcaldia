@@ -1,18 +1,24 @@
 import { IsString, IsOptional, IsUUID, MaxLength } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 
 export class CreateTipoPublicacionDto {
-  @ApiProperty({ example: '550e8400-e29b-41d4-a716-446655440000' })
+  @ApiPropertyOptional({ example: '550e8400-e29b-41d4-a716-446655440000' })
+  @IsOptional()
   @IsUUID()
-  sistema_id: string;
+  sistema_id?: string;
 
   @ApiProperty({ example: 'Resolución Municipal' })
   @IsString()
   @MaxLength(100)
-  nombre: string;
+  nombre!: string;
 
   @ApiPropertyOptional({ example: 'Resoluciones emitidas por el municipio' })
   @IsOptional()
   @IsString()
   descripcion?: string;
+
+  @ApiPropertyOptional({ example: '#C8102E' })
+  @IsOptional()
+  @IsString()
+  color_hex?: string;
 }

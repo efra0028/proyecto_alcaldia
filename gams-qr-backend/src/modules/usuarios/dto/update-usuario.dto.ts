@@ -1,5 +1,11 @@
 import { PartialType } from '@nestjs/swagger';
-import { IsArray, IsInt, IsOptional, IsString, MinLength } from 'class-validator';
+import {
+  IsArray,
+  IsInt,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { CreateUsuarioDto } from './create-usuario.dto';
 

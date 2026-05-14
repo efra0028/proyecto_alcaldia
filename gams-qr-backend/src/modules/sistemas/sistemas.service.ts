@@ -20,8 +20,24 @@ export class SistemasService {
   async findAll() {
     return this.sistemaRepo.find({
       order: { created_at: 'ASC' },
-      // Ocultamos api_key del listado general por seguridad
-      select: ['id', 'nombre', 'descripcion', 'color_hex', 'logo_url', 'is_active', 'created_at'],
+      select: [
+        'id',
+        'nombre',
+        'descripcion',
+        'color_hex',
+        'logo_url',
+        'is_active',
+        'created_at',
+      ],
+    });
+  }
+
+  // ── PÚBLICO ───────────────────────────────────────────────────────────────
+  async findActivos() {
+    return this.sistemaRepo.find({
+      where: { is_active: true },
+      order: { nombre: 'ASC' },
+      select: ['id', 'nombre', 'descripcion', 'color_hex'], // ✅ Cambiado de 'icono' a 'icon'
     });
   }
 
@@ -32,11 +48,14 @@ export class SistemasService {
   }
 
   async create(dto: CreateSistemaDto, currentUserId: number) {
-    // Verificar nombre duplicado
-    const existe = await this.sistemaRepo.findOne({ where: { nombre: dto.nombre } });
-    if (existe) throw new ConflictException(`Ya existe un sistema con el nombre "${dto.nombre}"`);
+    const existe = await this.sistemaRepo.findOne({
+      where: { nombre: dto.nombre },
+    });
+    if (existe)
+      throw new ConflictException(
+        `Ya existe un sistema con el nombre "${dto.nombre}"`,
+      );
 
-    // Generar api_key única: prefijo + 32 bytes aleatorios
     const api_key = `gams_${crypto.randomBytes(32).toString('hex')}`;
 
     const sistema = this.sistemaRepo.create({
@@ -48,7 +67,6 @@ export class SistemasService {
 
     const saved = await this.sistemaRepo.save(sistema);
 
-    // Devolver la api_key en texto plano SOLO al crear (nunca más se podrá ver)
     return {
       ...saved,
       api_key,
@@ -59,10 +77,14 @@ export class SistemasService {
   async update(id: string, dto: UpdateSistemaDto, currentUserId: number) {
     const sistema = await this.findOne(id);
 
-    // Verificar nombre duplicado si se está cambiando
     if (dto.nombre && dto.nombre !== sistema.nombre) {
-      const existe = await this.sistemaRepo.findOne({ where: { nombre: dto.nombre } });
-      if (existe) throw new ConflictException(`Ya existe un sistema con el nombre "${dto.nombre}"`);
+      const existe = await this.sistemaRepo.findOne({
+        where: { nombre: dto.nombre },
+      });
+      if (existe)
+        throw new ConflictException(
+          `Ya existe un sistema con el nombre "${dto.nombre}"`,
+        );
     }
 
     Object.assign(sistema, {
@@ -99,7 +121,6 @@ export class SistemasService {
     };
   }
 
-  // Para el ApiKeyGuard — busca sistema por api_key
   async findByApiKey(api_key: string): Promise<Sistema | null> {
     return this.sistemaRepo.findOne({ where: { api_key, is_active: true } });
   }

@@ -25,7 +25,15 @@ export class UsuariosService {
     return this.usuarioRepo
       .createQueryBuilder('u')
       .leftJoinAndSelect('u.roles', 'roles')
-      .select(['u.id', 'u.nombre', 'u.carnet', 'u.email', 'u.is_active', 'u.created_at', 'u.update_at'])
+      .select([
+        'u.id',
+        'u.nombre',
+        'u.carnet',
+        'u.email',
+        'u.is_active',
+        'u.created_at',
+        'u.update_at',
+      ])
       .addSelect(['roles.id', 'roles.nombre'])
       .orderBy('u.id', 'ASC')
       .getMany();
@@ -42,8 +50,11 @@ export class UsuariosService {
 
   async create(dto: CreateUsuarioDto, currentUserId: number) {
     // Verificar email duplicado
-    const existe = await this.usuarioRepo.findOne({ where: { email: dto.email } });
-    if (existe) throw new ConflictException(`El email ${dto.email} ya está registrado`);
+    const existe = await this.usuarioRepo.findOne({
+      where: { email: dto.email },
+    });
+    if (existe)
+      throw new ConflictException(`El email ${dto.email} ya está registrado`);
 
     // Hashear contraseña
     const password_hash = await bcrypt.hash(dto.password, 10);
@@ -67,7 +78,8 @@ export class UsuariosService {
     const saved = await this.usuarioRepo.save(usuario);
 
     // Retornar sin password_hash (select:false ya lo omite en TypeORM, pero por seguridad lo excluimos)
-    const { password_hash: _omit, ...result } = saved as unknown as Record<string, unknown>;
+    const result = { ...saved } as Record<string, unknown>;
+    delete result.password_hash;
     return result;
   }
 
@@ -76,13 +88,18 @@ export class UsuariosService {
 
     // Verificar email duplicado si se está cambiando
     if (dto.email && dto.email !== usuario.email) {
-      const existe = await this.usuarioRepo.findOne({ where: { email: dto.email } });
-      if (existe) throw new ConflictException(`El email ${dto.email} ya está registrado`);
+      const existe = await this.usuarioRepo.findOne({
+        where: { email: dto.email },
+      });
+      if (existe)
+        throw new ConflictException(`El email ${dto.email} ya está registrado`);
     }
 
     // Hashear nueva contraseña si se envió
     if (dto.password) {
-      Object.assign(usuario, { password_hash: await bcrypt.hash(dto.password, 10) });
+      Object.assign(usuario, {
+        password_hash: await bcrypt.hash(dto.password, 10),
+      });
     }
 
     // Actualizar roles si se enviaron

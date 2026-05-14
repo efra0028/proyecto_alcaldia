@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Usuario } from '../usuarios/usuario.entity';
 
 export enum AccionAuditoria {
@@ -18,7 +24,12 @@ export class Auditoria {
   @Column({ type: 'text' })
   registro_id: string; // TEXT para soportar UUID e INT
 
-  @Column({ type: 'enum', enum: AccionAuditoria, enumName: 'accion_auditoria', nullable: true })
+  @Column({
+    type: 'enum',
+    enum: AccionAuditoria,
+    enumName: 'accion_auditoria',
+    nullable: true,
+  })
   accion: AccionAuditoria;
 
   @Column({ nullable: true })

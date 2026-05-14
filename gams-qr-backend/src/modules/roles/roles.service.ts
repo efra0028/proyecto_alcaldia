@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Rol } from './rol.entity';
@@ -22,10 +26,16 @@ export class RolesService {
   }
 
   async create(dto: CreateRolDto, currentUserId: number) {
-    const existe = await this.rolRepo.findOne({ where: { nombre: dto.nombre } });
+    const existe = await this.rolRepo.findOne({
+      where: { nombre: dto.nombre },
+    });
     if (existe) throw new ConflictException(`El rol "${dto.nombre}" ya existe`);
 
-    const rol = this.rolRepo.create({ ...dto, created_by: currentUserId, updated_by: currentUserId });
+    const rol = this.rolRepo.create({
+      ...dto,
+      created_by: currentUserId,
+      updated_by: currentUserId,
+    });
     return this.rolRepo.save(rol);
   }
 
@@ -33,11 +43,18 @@ export class RolesService {
     const rol = await this.findOne(id);
 
     if (dto.nombre && dto.nombre !== rol.nombre) {
-      const existe = await this.rolRepo.findOne({ where: { nombre: dto.nombre } });
-      if (existe) throw new ConflictException(`El rol "${dto.nombre}" ya existe`);
+      const existe = await this.rolRepo.findOne({
+        where: { nombre: dto.nombre },
+      });
+      if (existe)
+        throw new ConflictException(`El rol "${dto.nombre}" ya existe`);
     }
 
-    Object.assign(rol, { ...dto, updated_by: currentUserId, update_at: new Date() });
+    Object.assign(rol, {
+      ...dto,
+      updated_by: currentUserId,
+      update_at: new Date(),
+    });
     return this.rolRepo.save(rol);
   }
 
@@ -47,6 +64,9 @@ export class RolesService {
     rol.updated_by = currentUserId;
     rol.update_at = new Date();
     await this.rolRepo.save(rol);
-    return { mensaje: `Rol ${rol.is_active ? 'activado' : 'desactivado'}`, is_active: rol.is_active };
+    return {
+      mensaje: `Rol ${rol.is_active ? 'activado' : 'desactivado'}`,
+      is_active: rol.is_active,
+    };
   }
 }

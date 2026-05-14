@@ -33,11 +33,16 @@ export class AuthService {
     }
 
     if (!usuario.is_active) {
-      throw new UnauthorizedException('Usuario inactivo. Contacta al administrador');
+      throw new UnauthorizedException(
+        'Usuario inactivo. Contacta al administrador',
+      );
     }
 
     // 2. Verificar contraseña
-    const passwordValido = await bcrypt.compare(dto.password, usuario.password_hash);
+    const passwordValido = await bcrypt.compare(
+      dto.password,
+      usuario.password_hash,
+    );
     if (!passwordValido) {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
@@ -55,7 +60,7 @@ export class AuthService {
 
     return {
       access_token,
-      user: {
+      usuario: {
         id: usuario.id,
         nombre: usuario.nombre,
         email: usuario.email,
@@ -95,8 +100,12 @@ export class AuthService {
     if (!usuario) throw new UnauthorizedException('Usuario no encontrado');
 
     // Verificar contraseña actual
-    const valida = await bcrypt.compare(dto.current_password, usuario.password_hash);
-    if (!valida) throw new BadRequestException('La contraseña actual es incorrecta');
+    const valida = await bcrypt.compare(
+      dto.current_password,
+      usuario.password_hash,
+    );
+    if (!valida)
+      throw new BadRequestException('La contraseña actual es incorrecta');
 
     // Guardar nueva contraseña
     usuario.password_hash = await bcrypt.hash(dto.new_password, 10);

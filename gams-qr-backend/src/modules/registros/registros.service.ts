@@ -51,7 +51,10 @@ export class RegistrosService {
   async create(dto: CreateRegistroDto, currentUserId: number) {
     // Verificar que no exista ya ese referencia_externa en ese sistema
     const existe = await this.registroRepo.findOne({
-      where: { sistema_id: dto.sistema_id, referencia_externa: dto.referencia_externa },
+      where: {
+        sistema_id: dto.sistema_id,
+        referencia_externa: dto.referencia_externa,
+      },
     });
     if (existe) {
       throw new ConflictException(
@@ -60,8 +63,11 @@ export class RegistrosService {
     }
 
     // Verificar que el estado exista
-    const estado = await this.estadoRepo.findOne({ where: { id: dto.estado_id } });
-    if (!estado) throw new BadRequestException(`Estado #${dto.estado_id} no existe`);
+    const estado = await this.estadoRepo.findOne({
+      where: { id: dto.estado_id },
+    });
+    if (!estado)
+      throw new BadRequestException(`Estado #${dto.estado_id} no existe`);
 
     const registro = this.registroRepo.create({
       ...dto,
@@ -76,8 +82,11 @@ export class RegistrosService {
     const registro = await this.findOne(id);
 
     if (dto.estado_id) {
-      const estado = await this.estadoRepo.findOne({ where: { id: dto.estado_id } });
-      if (!estado) throw new BadRequestException(`Estado #${dto.estado_id} no existe`);
+      const estado = await this.estadoRepo.findOne({
+        where: { id: dto.estado_id },
+      });
+      if (!estado)
+        throw new BadRequestException(`Estado #${dto.estado_id} no existe`);
     }
 
     Object.assign(registro, {
@@ -89,7 +98,11 @@ export class RegistrosService {
     return this.registroRepo.save(registro);
   }
 
-  async suspender(id: string, dto: SuspenderRegistroDto, currentUserId: number) {
+  async suspender(
+    id: string,
+    dto: SuspenderRegistroDto,
+    currentUserId: number,
+  ) {
     const registro = await this.findOne(id);
 
     // Buscar el estado SUSPENDIDO
@@ -97,7 +110,9 @@ export class RegistrosService {
       where: { nombre: 'SUSPENDIDO' },
     });
     if (!estadoSuspendido) {
-      throw new BadRequestException('No existe el estado SUSPENDIDO en el catálogo');
+      throw new BadRequestException(
+        'No existe el estado SUSPENDIDO en el catálogo',
+      );
     }
 
     Object.assign(registro, {
@@ -119,7 +134,9 @@ export class RegistrosService {
       where: { nombre: 'ACTIVO' },
     });
     if (!estadoActivo) {
-      throw new BadRequestException('No existe el estado ACTIVO en el catálogo');
+      throw new BadRequestException(
+        'No existe el estado ACTIVO en el catálogo',
+      );
     }
 
     Object.assign(registro, {

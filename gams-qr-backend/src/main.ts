@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -15,32 +16,50 @@ async function bootstrap() {
   // Servir imágenes QR como archivos estáticos en /public
   app.useStaticAssets(join(__dirname, '..', 'public'), { prefix: '/public' });
 
+  // ✅ Servir imágenes subidas por el admin
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/api/v1/uploads',
+  });
+
   // Prefijo global de la API
   app.setGlobalPrefix('api/v1');
 
-  // Seguridad headers HTTP
-  app.use(helmet());
+  // ✅ Helmet configurado para permitir imágenes cross-origin
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+      contentSecurityPolicy: false,
+    }),
+  );
 
-  // CORS — ajustar origin al dominio del frontend en producción
+  // CORS — permitir comunicación con el frontend
   app.enableCors({
-    origin: config.get('NODE_ENV') === 'development' ? '*' : ['https://gams.gob.bo'],
+    origin:
+      config.get('NODE_ENV') === 'development'
+        ? [
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'http://localhost:3002',
+          ]
+        : ['https://gams.gob.bo'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key'],
   });
 
   // Validación global de DTOs
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,           // Elimina campos no declarados en el DTO
-      forbidNonWhitelisted: true, // Rechaza requests con campos extra
-      transform: true,            // Convierte tipos automáticamente
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
 
-  // Filtro global de excepciones — respuestas seguras y consistentes
+  // Filtro global de excepciones
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  // Swagger — documentación de la API
+  // Swagger
   const swaggerConfig = new DocumentBuilder()
     .setTitle('GAMS QR-Manager API')
     .setDescription('API REST para el sistema de gestión de QR municipales')
@@ -57,4 +76,4 @@ async function bootstrap() {
   console.log(`🚀 Servidor corriendo en: http://localhost:${port}/api/v1`);
   console.log(`📖 Swagger docs en:       http://localhost:${port}/api/docs`);
 }
-bootstrap();
+void bootstrap();

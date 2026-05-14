@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Body,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { PublicacionesService } from './publicaciones.service';
 import { CreatePublicacionDto } from './dto/create-publicacion.dto';
@@ -21,14 +31,7 @@ export class PublicacionesController {
     return this.service.findActivas();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: '🔓 PÚBLICO — Ver una publicación' })
-  findOne(@Param('id') id: string) {
-    return this.service.findOne(id);
-  }
-
-  // ── ENDPOINTS PROTEGIDOS (panel admin) ────────────────────────
-
+  // ✅ DEBE IR ANTES de @Get(':id') para que NestJS no lo intercepte como parámetro
   @Get('admin/todas')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @ApiBearerAuth()
@@ -36,6 +39,20 @@ export class PublicacionesController {
   findAll() {
     return this.service.findAll();
   }
+
+  @Get('uuid/:uuid')
+  @ApiOperation({ summary: '🔓 PÚBLICO — Ver una publicación por UUID' })
+  findByUuid(@Param('uuid') uuid: string) {
+    return this.service.findOne(uuid);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: '🔓 PÚBLICO — Ver una publicación' })
+  findOne(@Param('id') id: string) {
+    return this.service.findOne(id);
+  }
+
+  // ── ENDPOINTS PROTEGIDOS (panel admin) ────────────────────────
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -55,6 +72,22 @@ export class PublicacionesController {
     @CurrentUser() user: JwtPayload,
   ) {
     return this.service.update(id, dto, user.id);
+  }
+
+  @Patch(':id/publicar')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Publicar publicación' })
+  publish(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.service.publish(id, user.id);
+  }
+
+  @Patch(':id/despublicar')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Despublicar publicación' })
+  unpublish(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.service.unpublish(id, user.id);
   }
 
   @Delete(':id')

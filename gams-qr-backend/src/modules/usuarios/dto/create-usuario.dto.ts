@@ -31,7 +31,10 @@ export class CreateUsuarioDto {
   @MinLength(8, { message: 'La contraseña debe tener mínimo 8 caracteres' })
   password: string;
 
-  @ApiPropertyOptional({ example: [1, 2], description: 'IDs de roles a asignar' })
+  @ApiPropertyOptional({
+    example: [1, 2],
+    description: 'IDs de roles a asignar',
+  })
   @IsOptional()
   @IsArray()
   @IsInt({ each: true })

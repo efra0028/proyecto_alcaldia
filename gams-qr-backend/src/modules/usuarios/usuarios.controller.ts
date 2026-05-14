@@ -43,10 +43,7 @@ export class UsuariosController {
   @Post()
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Crear nuevo usuario' })
-  create(
-    @Body() dto: CreateUsuarioDto,
-    @CurrentUser() user: JwtPayload,
-  ) {
+  create(@Body() dto: CreateUsuarioDto, @CurrentUser() user: JwtPayload) {
     return this.usuariosService.create(dto, user.id);
   }
 

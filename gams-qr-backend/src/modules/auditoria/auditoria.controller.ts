@@ -1,5 +1,10 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { AuditoriaService } from './auditoria.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -17,10 +22,7 @@ export class AuditoriaController {
   @ApiOperation({ summary: 'Ver log de auditoría (filtrable por tabla)' })
   @ApiQuery({ name: 'tabla', required: false, example: 'usuarios' })
   @ApiQuery({ name: 'limite', required: false, example: 100 })
-  findAll(
-    @Query('tabla') tabla?: string,
-    @Query('limite') limite?: number,
-  ) {
+  findAll(@Query('tabla') tabla?: string, @Query('limite') limite?: number) {
     return this.service.findAll(tabla, limite);
   }
 

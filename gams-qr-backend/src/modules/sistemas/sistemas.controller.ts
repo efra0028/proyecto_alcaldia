@@ -19,31 +19,48 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import type { JwtPayload } from '../../common/interfaces/jwt-payload.interface';
 
 @ApiTags('Sistemas')
-@ApiBearerAuth()
-@UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('SUPER_ADMIN')
 @Controller('sistemas')
 export class SistemasController {
   constructor(private readonly sistemasService: SistemasService) {}
 
+  // ── PÚBLICO (sin autenticación) ──────────────────────────────────────────
+  @Get('publicos')
+  @ApiOperation({ summary: 'Listar sistemas activos (público)' })
+  findPublicos() {
+    return this.sistemasService.findActivos();
+  }
+
+  // ── PROTEGIDOS ───────────────────────────────────────────────────────────
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Get()
   @ApiOperation({ summary: 'Listar todos los sistemas municipales' })
   findAll() {
     return this.sistemasService.findAll();
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un sistema por ID' })
   findOne(@Param('id') id: string) {
     return this.sistemasService.findOne(id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Post()
-  @ApiOperation({ summary: 'Crear nuevo sistema municipal (genera api_key automáticamente)' })
+  @ApiOperation({ summary: 'Crear nuevo sistema municipal' })
   create(@Body() dto: CreateSistemaDto, @CurrentUser() user: JwtPayload) {
     return this.sistemasService.create(dto, user.id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Put(':id')
   @ApiOperation({ summary: 'Actualizar datos del sistema' })
   update(
@@ -54,14 +71,20 @@ export class SistemasController {
     return this.sistemasService.update(id, dto, user.id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Patch(':id/toggle')
   @ApiOperation({ summary: 'Activar o desactivar sistema' })
   toggle(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
     return this.sistemasService.toggleActivo(id, user.id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('SUPER_ADMIN')
   @Patch(':id/regenerar-key')
-  @ApiOperation({ summary: 'Regenerar api_key del sistema (invalida la anterior)' })
+  @ApiOperation({ summary: 'Regenerar api_key del sistema' })
   regenerarKey(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
     return this.sistemasService.regenerarApiKey(id, user.id);
   }

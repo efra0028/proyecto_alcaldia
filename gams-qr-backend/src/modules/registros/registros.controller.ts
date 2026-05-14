@@ -1,8 +1,20 @@
 import {
-  Controller, Get, Post, Put, Patch, Body,
-  Param, Query, UseGuards,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Body,
+  Param,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { RegistrosService } from './registros.service';
 import { CreateRegistroDto } from './dto/create-registro.dto';
 import { UpdateRegistroDto } from './dto/update-registro.dto';
@@ -21,10 +33,19 @@ export class RegistrosController {
   constructor(private readonly registrosService: RegistrosService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Listar registros paginados (filtrable por sistema_id)' })
+  @ApiOperation({
+    summary: 'Listar registros paginados (filtrable por sistema_id)',
+  })
   @ApiQuery({ name: 'sistema_id', required: false })
-  findAll(@Query('sistema_id') sistema_id?: string, @Query() paginacion?: PaginacionDto) {
-    return this.registrosService.findAll(sistema_id, paginacion?.pagina, paginacion?.limite);
+  findAll(
+    @Query('sistema_id') sistema_id?: string,
+    @Query() paginacion?: PaginacionDto,
+  ) {
+    return this.registrosService.findAll(
+      sistema_id,
+      paginacion?.pagina,
+      paginacion?.limite,
+    );
   }
 
   @Get(':id')

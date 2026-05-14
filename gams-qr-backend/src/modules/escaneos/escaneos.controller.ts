@@ -1,5 +1,17 @@
-import { Controller, Get, Param, ParseIntPipe, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { EscaneosService } from './escaneos.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
@@ -12,7 +24,10 @@ export class EscaneosController {
   constructor(private readonly service: EscaneosService) {}
 
   @Get('estadisticas')
-  @ApiOperation({ summary: 'Estadísticas globales de escaneos (total, válidos, bloqueados, vencidos)' })
+  @ApiOperation({
+    summary:
+      'Estadísticas globales de escaneos (total, válidos, bloqueados, vencidos)',
+  })
   estadisticas() {
     return this.service.estadisticas();
   }

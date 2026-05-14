@@ -15,6 +15,8 @@ export class CreateEstadoPublicacionDto {
   @ApiPropertyOptional({ example: '#22C55E' })
   @IsOptional()
   @IsString()
-  @Matches(/^#[0-9A-Fa-f]{6}$/, { message: 'color_hex debe ser un color HEX válido (#RRGGBB)' })
+  @Matches(/^#[0-9A-Fa-f]{6}$/, {
+    message: 'color_hex debe ser un color HEX válido (#RRGGBB)',
+  })
   color_hex?: string;
 }

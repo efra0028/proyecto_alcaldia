@@ -1,48 +1,60 @@
 import {
   IsString,
-  IsOptional,
   IsInt,
-  IsObject,
+  IsOptional,
+  IsBoolean,
   IsDateString,
   MaxLength,
+  IsObject,
+  Min,
+  Max,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePublicacionDto {
-  @ApiProperty({ example: 1, description: 'ID del tipo de publicación' })
+  @ApiProperty({ example: 1 })
   @IsInt()
-  tipo_id: number;
+  tipo_id!: number;
 
-  @ApiProperty({ example: 'Resolución Municipal N° 001/2025' })
+  @ApiProperty({ example: 'Resolución Municipal N° 123' })
   @IsString()
   @MaxLength(255)
-  titulo: string;
+  titulo!: string;
 
   @ApiProperty({
-    example: { texto: 'Se resuelve...', autor: 'Alcaldía Municipal' },
-    description: 'Contenido libre en formato JSON definido por cada sistema',
+    example: { resumen: 'Texto breve', cuerpo: 'Texto completo' },
   })
   @IsObject()
-  contenido: object;
+  contenido!: Record<string, unknown>;
 
-  @ApiPropertyOptional({
-    example: ['https://cdn.gams.gob.bo/docs/resolucion.pdf'],
-    description: 'Array de URLs de archivos adjuntos',
-  })
+  @ApiPropertyOptional({ example: { portada: 'https://...', archivos: [] } })
   @IsOptional()
-  adjuntos_urls?: object;
+  @IsObject()
+  adjuntos_urls?: Record<string, unknown>;
 
-  @ApiPropertyOptional({ example: '2025-01-15' })
+  @ApiPropertyOptional({ example: '2026-05-12' })
   @IsOptional()
   @IsDateString()
   fecha_publicacion?: string;
 
-  @ApiPropertyOptional({ example: '2026-01-15', description: 'Dejar vacío si no tiene fecha de vencimiento' })
+  @ApiPropertyOptional({ example: '2026-06-01' })
   @IsOptional()
   @IsDateString()
   fecha_vencimiento?: string;
 
-  @ApiProperty({ example: 1, description: 'ID del estado de publicación (1=ACTIVA)' })
+  @ApiProperty({ example: 1 })
   @IsInt()
-  estado_id: number;
+  estado_id!: number;
+
+  @ApiPropertyOptional({ example: false })
+  @IsOptional()
+  @IsBoolean()
+  destacada?: boolean;
+
+  @ApiPropertyOptional({ example: 0 })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(10)
+  orden_carrusel?: number;
 }

@@ -1,40 +1,46 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('sistemas')
 export class Sistema {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id!: string;
 
-  @Column({ length: 150 })
-  nombre: string;
+  @Column({ unique: true, length: 150 })
+  nombre!: string;
 
-  @Column({ type: 'text', nullable: true })
-  descripcion: string;
+  @Column({ nullable: true, type: 'text' })
+  descripcion!: string;
 
-  @Column({ length: 7, nullable: true })
-  color_hex: string;
+  @Column({ name: 'color_hex', default: '#3B82F6', length: 7 })
+  color_hex!: string;
 
-  @Column({ length: 200, nullable: true })
-  logo_url: string;
+  @Column({ name: 'logo_url', nullable: true, length: 200 })
+  logo_url!: string;
 
-  @Column({ length: 100, unique: true })
-  api_key: string;
+  @Column({ name: 'api_key', unique: true })
+  api_key!: string;
 
-  @Column({ type: 'jsonb', nullable: true })
-  schema_campos: object;
+  @Column({ name: 'schema_campos', type: 'jsonb', nullable: true })
+  schema_campos!: object;
 
-  @Column({ default: true })
-  is_active: boolean;
+  @Column({ name: 'is_active', default: true })
+  is_active!: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'NOW()' })
-  created_at: Date;
+  @Column({ name: 'created_by', nullable: true })
+  created_by!: number;
 
-  @Column({ type: 'timestamp', default: () => 'NOW()' })
-  update_at: Date;
+  @Column({ name: 'updated_by', nullable: true })
+  updated_by!: number;
 
-  @Column()
-  created_by: number;
+  @CreateDateColumn({ name: 'created_at' })
+  created_at!: Date;
 
-  @Column()
-  updated_by: number;
+  @UpdateDateColumn({ name: 'update_at' })
+  update_at!: Date;
 }

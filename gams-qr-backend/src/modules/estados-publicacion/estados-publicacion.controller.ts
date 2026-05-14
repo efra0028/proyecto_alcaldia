@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Put, Patch, Body, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Patch,
+  Body,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { EstadosPublicacionService } from './estados-publicacion.service';
 import { CreateEstadoPublicacionDto } from './dto/create-estado-publicacion.dto';
@@ -16,7 +26,9 @@ export class EstadosPublicacionController {
   constructor(private readonly service: EstadosPublicacionService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Listar estados de publicación (ACTIVA, BORRADOR, etc.)' })
+  @ApiOperation({
+    summary: 'Listar estados de publicación (ACTIVA, BORRADOR, etc.)',
+  })
   findAll() {
     return this.service.findAll();
   }
@@ -30,7 +42,10 @@ export class EstadosPublicacionController {
   @Post()
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Crear nuevo estado de publicación' })
-  create(@Body() dto: CreateEstadoPublicacionDto, @CurrentUser() user: JwtPayload) {
+  create(
+    @Body() dto: CreateEstadoPublicacionDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.create(dto, user.id);
   }
 
@@ -48,7 +63,10 @@ export class EstadosPublicacionController {
   @Patch(':id/toggle')
   @Roles('SUPER_ADMIN')
   @ApiOperation({ summary: 'Activar o desactivar estado de publicación' })
-  toggle(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: JwtPayload) {
+  toggle(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.service.toggleActivo(id, user.id);
   }
 }

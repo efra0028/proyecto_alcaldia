@@ -46,9 +46,9 @@ export class EscaneosService {
 
     return {
       total,
-      validos:    map['VALIDO']    ?? 0,
+      validos: map['VALIDO'] ?? 0,
       bloqueados: map['BLOQUEADO'] ?? 0,
-      vencidos:   map['VENCIDO']   ?? 0,
+      vencidos: map['VENCIDO'] ?? 0,
     };
   }
 }

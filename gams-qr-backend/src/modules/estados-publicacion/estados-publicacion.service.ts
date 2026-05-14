@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { EstadoPublicacion } from './estado-publicacion.entity';
@@ -23,7 +27,8 @@ export class EstadosPublicacionService {
 
   async create(dto: CreateEstadoPublicacionDto, currentUserId: number) {
     const existe = await this.repo.findOne({ where: { nombre: dto.nombre } });
-    if (existe) throw new ConflictException(`El estado "${dto.nombre}" ya existe`);
+    if (existe)
+      throw new ConflictException(`El estado "${dto.nombre}" ya existe`);
 
     const estado = this.repo.create({
       ...dto,
@@ -33,15 +38,24 @@ export class EstadosPublicacionService {
     return this.repo.save(estado);
   }
 
-  async update(id: number, dto: Partial<CreateEstadoPublicacionDto>, currentUserId: number) {
+  async update(
+    id: number,
+    dto: Partial<CreateEstadoPublicacionDto>,
+    currentUserId: number,
+  ) {
     const estado = await this.findOne(id);
 
     if (dto.nombre && dto.nombre !== estado.nombre) {
       const existe = await this.repo.findOne({ where: { nombre: dto.nombre } });
-      if (existe) throw new ConflictException(`El estado "${dto.nombre}" ya existe`);
+      if (existe)
+        throw new ConflictException(`El estado "${dto.nombre}" ya existe`);
     }
 
-    Object.assign(estado, { ...dto, updated_by: currentUserId, update_at: new Date() });
+    Object.assign(estado, {
+      ...dto,
+      updated_by: currentUserId,
+      update_at: new Date(),
+    });
     return this.repo.save(estado);
   }
 
@@ -51,6 +65,9 @@ export class EstadosPublicacionService {
     estado.updated_by = currentUserId;
     estado.update_at = new Date();
     await this.repo.save(estado);
-    return { mensaje: `Estado ${estado.is_active ? 'activado' : 'desactivado'}`, is_active: estado.is_active };
+    return {
+      mensaje: `Estado ${estado.is_active ? 'activado' : 'desactivado'}`,
+      is_active: estado.is_active,
+    };
   }
 }

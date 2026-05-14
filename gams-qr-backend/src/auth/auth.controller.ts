@@ -30,8 +30,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Cambiar contraseña del usuario autenticado' })
-  changePassword(@Body() dto: ChangePasswordDto, @CurrentUser() user: JwtPayload) {
+  changePassword(
+    @Body() dto: ChangePasswordDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
     return this.authService.changePassword(user.id, dto);
   }
 }
-

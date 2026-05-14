@@ -19,6 +19,9 @@ import { APP_INTERCEPTOR, APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { RolesModule } from './modules/roles/roles.module';
 import { EscaneosModule } from './modules/escaneos/escaneos.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { UploadModule } from './modules/upload/upload.module';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -27,6 +30,12 @@ import { EscaneosModule } from './modules/escaneos/escaneos.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    // Servir archivos estáticos (imágenes, PDFs, etc.) desde la carpeta "uploads"
+    ServeStaticModule.forRoot({
+      rootPath: join(process.cwd(), 'uploads'),
+      serveRoot: '/uploads',
+    }),
+    UploadModule,
 
     // Base de datos PostgreSQL
     TypeOrmModule.forRootAsync({
@@ -37,8 +46,8 @@ import { EscaneosModule } from './modules/escaneos/escaneos.module';
     // Rate limiting global
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,  // 1 minuto
-        limit: 100,  // max 100 requests por minuto por IP
+        ttl: 60000, // 1 minuto
+        limit: 100, // max 100 requests por minuto por IP
       },
     ]),
 
