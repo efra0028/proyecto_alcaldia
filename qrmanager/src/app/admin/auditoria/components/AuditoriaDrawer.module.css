@@ -1,0 +1,193 @@
+.backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(30,26,24,0.35);
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.15s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 201;
+  width: 520px; max-width: 100vw;
+  background: #fff;
+  border-left: 1px solid #e4e0db;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.12);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  animation: slideIn 0.22s cubic-bezier(0.22,0.68,0,1.1);
+}
+@keyframes slideIn {
+  from { transform: translateX(32px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* ── Header ── */
+.header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 22px 24px 18px; border-bottom: 1px solid #f0edea; flex-shrink: 0;
+}
+.headerTop {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.accionBadge {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
+  border: 1px solid;
+}
+.tabla {
+  font-size: 13px; font-weight: 700; color: #1e1a18;
+  background: #f6f4f1; padding: 3px 9px; border-radius: 6px;
+  font-family: "SF Mono","Fira Code",monospace;
+}
+.registroId {
+  font-size: 12px; color: #7a7470;
+}
+.registroId code {
+  font-family: "SF Mono","Fira Code",monospace;
+  font-size: 11.5px; color: #5a5450;
+  background: #f6f4f1; padding: 1px 5px; border-radius: 4px;
+}
+.closeBtn {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1.5px solid #e4e0db; background: #faf9f8;
+  cursor: pointer; font-size: 13px; color: #7a7470;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.12s;
+}
+.closeBtn:hover { background: #f0edea; }
+
+/* ── Meta grid ── */
+.metaGrid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; flex-shrink: 0;
+  border-bottom: 1px solid #f0edea;
+}
+.metaItem {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 13px 24px; border-bottom: 1px solid #f6f4f1;
+}
+.metaItem:nth-child(odd)  { border-right: 1px solid #f6f4f1; }
+.metaKey {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #9e9890;
+}
+.metaVal {
+  font-size: 12.5px; font-weight: 500; color: #1e1a18; line-height: 1.4;
+}
+.metaVal em { color: #9e9890; font-style: italic; font-weight: 400; }
+.metaVal code {
+  font-family: "SF Mono","Fira Code",monospace;
+  font-size: 11.5px; color: #5a5450;
+}
+
+/* ── Sections ── */
+.section {
+  padding: 18px 24px;
+  border-bottom: 1px solid #f0edea;
+  overflow-y: auto;
+}
+.section:last-child {
+  flex: 1; border-bottom: none;
+}
+.sectionTitle {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #9e9890; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ── Diff ── */
+.diffBlock { display: flex; flex-direction: column; gap: 10px; }
+.diffEmpty {
+  font-size: 12.5px; color: #9e9890; font-style: italic;
+  padding: 12px; text-align: center; background: #f6f4f1; border-radius: 8px;
+}
+.diffRow {
+  background: #fafaf9; border: 1px solid #e4e0db; border-radius: 10px;
+  overflow: hidden;
+}
+.diffKey {
+  font-size: 11px; font-weight: 700; font-family: "SF Mono","Fira Code",monospace;
+  color: #5a5450; background: #f0edea; padding: 6px 12px;
+  border-bottom: 1px solid #e4e0db;
+}
+.diffValues {
+  display: flex; align-items: center; gap: 0;
+}
+.diffBefore, .diffAfter {
+  flex: 1; padding: 9px 12px; display: flex; flex-direction: column; gap: 3px;
+  overflow: hidden;
+}
+.diffBefore { background: #fff8f8; }
+.diffAfter  { background: #f0fdf4; border-left: 1px solid #e4e0db; }
+.diffArrow {
+  font-size: 14px; color: #ccc8c2; padding: 0 6px; flex-shrink: 0;
+}
+.diffTag {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em;
+  display: block; margin-bottom: 2px;
+}
+.diffBefore .diffTag { color: #b91c1c; }
+.diffAfter  .diffTag { color: #16a34a; }
+.diffBefore code, .diffAfter code {
+  font-family: "SF Mono","Fira Code",monospace;
+  font-size: 11.5px; color: #3a3430;
+  word-break: break-all; white-space: pre-wrap;
+}
+.diffCount {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: #be2d26; color: #fff;
+  font-size: 9.5px; font-weight: 700;
+}
+
+/* ── JSON pair ── */
+.jsonPair {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.jsonBlock, .jsonEmpty {
+  border: 1px solid #e4e0db; border-radius: 10px; overflow: hidden;
+}
+.jsonEmpty {
+  padding: 14px; text-align: center;
+  background: #f6f4f1;
+}
+.jsonEmpty span {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #9e9890; display: block; margin-bottom: 6px;
+}
+.jsonEmpty p { font-size: 12px; color: #ccc8c2; font-style: italic; }
+.jsonLabel {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: #9e9890;
+  padding: 8px 12px; background: #f6f4f1; border-bottom: 1px solid #e4e0db;
+  display: flex; align-items: center; gap: 8px;
+}
+.jsonTable { display: flex; flex-direction: column; }
+.jsonRow {
+  display: flex; align-items: baseline; gap: 8px;
+  padding: 6px 12px; border-bottom: 1px solid #f6f4f1;
+  font-size: 12px;
+}
+.jsonRow:last-child { border-bottom: none; }
+.jsonKey {
+  font-family: "SF Mono","Fira Code",monospace;
+  font-size: 11px; font-weight: 600; color: #7a7470;
+  min-width: 120px; flex-shrink: 0;
+}
+.jsonVal {
+  color: #1e1a18; word-break: break-all; flex: 1;
+}
+.jsonVal code {
+  font-family: "SF Mono","Fira Code",monospace; font-size: 11px;
+}
+.jsonNull { color: #9e9890; font-style: italic; }
+
+@media (max-width: 640px) {
+  .drawer { width: 100vw; }
+  .metaGrid { grid-template-columns: 1fr; }
+  .metaItem:nth-child(odd) { border-right: none; }
+  .diffValues { flex-direction: column; }
+  .diffAfter { border-left: none; border-top: 1px solid #e4e0db; }
+  .diffArrow { display: none; }
+}

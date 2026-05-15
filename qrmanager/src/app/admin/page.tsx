@@ -82,7 +82,7 @@ export default function AdminDashboard() {
           <Link href="/admin/registros/nuevo" className={styles.btnSecondary}>
             📋 Nuevo registro
           </Link>
-          <Link href="/admin/qr/nuevo" className={styles.btnPrimary}>
+          <Link href="/admin/qrGenerador" className={styles.btnPrimary}>
             ⬛ Generar QR
           </Link>
         </div>

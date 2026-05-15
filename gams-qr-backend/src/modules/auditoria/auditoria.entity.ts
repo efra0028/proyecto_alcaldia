@@ -16,13 +16,13 @@ export enum AccionAuditoria {
 @Entity('auditoria')
 export class Auditoria {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column({ length: 50 })
-  tabla_nombre: string; // ej: 'usuarios', 'registros', 'publicaciones'
+  tabla_nombre!: string; // ej: 'usuarios', 'registros', 'publicaciones'
 
   @Column({ type: 'text' })
-  registro_id: string; // TEXT para soportar UUID e INT
+  registro_id!: string; // TEXT para soportar UUID e INT
 
   @Column({
     type: 'enum',
@@ -30,24 +30,24 @@ export class Auditoria {
     enumName: 'accion_auditoria',
     nullable: true,
   })
-  accion: AccionAuditoria;
+  accion!: AccionAuditoria;
 
   @Column({ nullable: true })
-  usuario_id: number; // null si fue acción pública (escaneo)
+  usuario_id!: number; // null si fue acción pública (escaneo)
 
   @Column({ type: 'jsonb', nullable: true })
-  datos_antes: object;
+  datos_antes!: object;
 
   @Column({ type: 'jsonb', nullable: true })
-  datos_despues: object;
+  datos_despues!: object;
 
   @Column({ length: 50, nullable: true })
-  ip_address: string;
+  ip_address!: string;
 
   @Column({ type: 'timestamp', default: () => 'NOW()' })
-  created_at: Date;
+  created_at!: Date;
 
   @ManyToOne(() => Usuario, { nullable: true })
   @JoinColumn({ name: 'usuario_id' })
-  usuario: Usuario;
+  usuario!: Usuario;
 }

@@ -10,24 +10,24 @@ import { QrCodigo } from '../qr-codigos/qr-codigo.entity';
 @Entity('escaneos')
 export class Escaneo {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  qr_codigo_id: number;
+  qr_codigo_id!: number;
 
   @Column({ length: 50 })
-  ip_address: string;
+  ip_address!: string;
 
   @Column({ type: 'varchar', length: 150, nullable: true })
-  dispositivo: string | null;
+  dispositivo!: string | null;
 
   @Column({ length: 20 })
-  resultado: string; // 'VALIDO' | 'BLOQUEADO' | 'VENCIDO' | 'EXPIRADO'
+  resultado!: string; // 'VALIDO' | 'BLOQUEADO' | 'VENCIDO' | 'EXPIRADO'
 
   @Column({ type: 'timestamp', default: () => 'NOW()' })
-  created_at: Date;
+  created_at!: Date;
 
   @ManyToOne(() => QrCodigo)
   @JoinColumn({ name: 'qr_codigo_id' })
-  qr_codigo: QrCodigo;
+  qr_codigo!: QrCodigo;
 }

@@ -3,6 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Escaneo } from './escaneo.entity';
 
+interface RawEstadistica {
+  resultado: string;
+  count: string; // PostgreSQL devuelve COUNT como string
+}
+
 @Injectable()
 export class EscaneosService {
   constructor(
@@ -35,7 +40,7 @@ export class EscaneosService {
       .select('e.resultado', 'resultado')
       .addSelect('COUNT(*)', 'count')
       .groupBy('e.resultado')
-      .getRawMany();
+      .getRawMany<RawEstadistica>();
 
     const map: Record<string, number> = {};
     let total = 0;

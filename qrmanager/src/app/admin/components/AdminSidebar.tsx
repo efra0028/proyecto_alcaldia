@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { AdminUser, NavItem } from '../types'
 import styles from './AdminSidebar.module.css'
+import Image from 'next/image';
 
 const NAV_ITEMS: { seccion: string; items: NavItem[] }[] = [
   {
@@ -16,7 +17,7 @@ const NAV_ITEMS: { seccion: string; items: NavItem[] }[] = [
     seccion: 'Gestión',
     items: [
       { id: 'usuarios',     label: 'Usuarios',         icono: '�', href: '/admin/usuarios' },
-      { id: 'qr',           label: 'Códigos QR',       icono: '⬛', href: '/admin/qr-generador', },
+      { id: 'qr',           label: 'Códigos QR',       icono: '⬛', href: '/admin/qrManager', },
       { id: 'publicaciones',label: 'Publicaciones',    icono: '📰', href: '/admin/publicaciones' },
       { id: 'sistemas',     label: 'Sistemas',         icono: '⚙️', href: '/admin/sistemas' },
     ],
@@ -63,18 +64,25 @@ export default function AdminSidebar({
 
   const iniciales = user.nombre.split(' ').map(n => n[0]).slice(0, 2).join('')
 
-  return (
-    <>
-      {/* Overlay mobile */}
-      {mobileOpen && <div className={styles.overlay} onClick={onCloseMobile} />}
+return (
+  <>
+    {/* Overlay mobile */}
+    {mobileOpen && <div className={styles.overlay} onClick={onCloseMobile} />}
 
-      <aside className={sidebarClass}>
-        {/* Marca */}
-        <div className={styles.brand}>
-          <div className={styles.brandIcon}>🏛️</div>
-          <div className={styles.brandText}>
-            <div className={styles.brandTitle}>QR-Manager</div>
-            <div className={styles.brandSub}>GAMS · Administración</div>
+    <aside className={sidebarClass}>
+      {/* Marca */}
+      <div className={styles.brand}>
+        <div className={styles.brandIcon}>
+          <Image 
+            src="/sede.ico"  // Coloca el logo en public/
+            alt="Logo"
+            width={32}
+            height={32}
+          />
+        </div>
+        <div className={styles.brandText}>
+          <div className={styles.brandTitle}>QR-Manager</div>
+          <div className={styles.brandSub}>GAMS · Administración</div>
           </div>
         </div>
 

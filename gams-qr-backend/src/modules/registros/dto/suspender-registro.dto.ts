@@ -6,5 +6,5 @@ export class SuspenderRegistroDto {
   @IsString()
   @IsNotEmpty({ message: 'El motivo de suspensión es obligatorio' })
   @MaxLength(500)
-  motivo: string;
+  motivo!: string;
 }

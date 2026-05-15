@@ -15,7 +15,7 @@ export class CreateRegistroDto {
     description: 'ID del sistema municipal',
   })
   @IsUUID()
-  sistema_id: string;
+  sistema_id!: string;
 
   @ApiProperty({
     example: '2345-ABC',
@@ -24,7 +24,7 @@ export class CreateRegistroDto {
   })
   @IsString()
   @MaxLength(100)
-  referencia_externa: string;
+  referencia_externa!: string;
 
   @ApiProperty({
     example: { nombre: 'Juan Pérez', placa: '2345-ABC', licencia: 'B' },
@@ -32,11 +32,11 @@ export class CreateRegistroDto {
       'Datos a mostrar cuando se escanea el QR (estructura libre por sistema)',
   })
   @IsObject()
-  datos_display: Record<string, unknown>;
+  datos_display!: Record<string, unknown>;
 
   @ApiProperty({ example: '2025-01-01' })
   @IsDateString()
-  fecha_inicio: string;
+  fecha_inicio!: string;
 
   @ApiPropertyOptional({
     example: '2026-01-01',
@@ -51,5 +51,5 @@ export class CreateRegistroDto {
     description: 'ID del estado de registro (1=ACTIVO)',
   })
   @IsInt()
-  estado_id: number;
+  estado_id!: number;
 }
